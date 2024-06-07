@@ -1,8 +1,8 @@
 app_name = "sensara_integration"
 app_title = "Sensara Integration"
-app_publisher = "Developer"
+app_publisher = "dteam0370@gmail.com"
 app_description = "Integration"
-app_email = "dteam0370@gmail.com"
+app_email = " dteam0370@gmail.com"
 app_license = "mit"
 # required_apps = []
 

@@ -1,7 +1,7 @@
 [project]
 name = "sensara_integration"
 authors = [
-    { name = "Developer", email = "dteam0370@gmail.com"}
+    { name = "dteam0370@gmail.com", email = " dteam0370@gmail.com"}
 ]
 description = "Integration"
 requires-python = ">=3.10"
