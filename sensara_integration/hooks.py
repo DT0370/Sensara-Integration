@@ -131,7 +131,7 @@ app_license = "mit"
 # }
 doc_events = { 
     "Delivery Note": {
-        "validate": "sensara_integration.sensara_integration.customization.delivery_note.delivery_note.on_sumbit"
+        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.delivery_note.on_sumbit"
     }
  }
 # Scheduled Tasks
