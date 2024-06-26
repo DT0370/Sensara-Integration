@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:subscription_id",
+ "creation": "2024-06-26 09:39:11.466365",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "subscription_id",
+  "phone_number",
+  "country_code",
+  "column_break_xkap",
+  "action",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "subscription_id",
+   "fieldtype": "Link",
+   "label": "Subscription ID",
+   "options": "Delivery Note",
+   "unique": 1
+  },
+  {
+   "fetch_from": "subscription_id.contact_phone",
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "default": "+91",
+   "fieldname": "country_code",
+   "fieldtype": "Data",
+   "label": "Country Code"
+  },
+  {
+   "fieldname": "column_break_xkap",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Select",
+   "label": "Action",
+   "options": "\nSUBSCRIPTION_DEACTIVATION\nSUBSCRIPTION_CANCELLATION"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Subscription Deactivation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-06-26 13:43:37.628463",
+ "modified_by": "Administrator",
+ "module": "Sensara Integration",
+ "name": "Subscription Deactivation",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

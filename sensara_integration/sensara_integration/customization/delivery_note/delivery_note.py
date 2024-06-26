@@ -29,7 +29,7 @@ def on_sumbit(doc,method=None):
     
     for item in doc.items:
         if item.item_code in product_bundle_list:
-            plan.update({"plan_id":item.item_code, "id":item.item_name})
+            plan.update({"plan_id":item.item_code   , "id":item.item_name})
         else:
             serial_batch_bundle = frappe.get_doc("Serial and Batch Bundle",item.serial_and_batch_bundle)
 
@@ -54,8 +54,28 @@ def on_sumbit(doc,method=None):
     print("body json= ",json.dumps(body))
 
     # Make the POST request
+    webhook_log = frappe.new_doc("Sensara Integration Request Log")
+    webhook_log.request_for = "Subscription Activation"
+    webhook_log.reference_document = doc.name
+    webhook_log.headers = str(headers)
+    webhook_log.data = str(json.dumps(body))
+    webhook_log.user = doc.modified_by
+    webhook_log.url = 'https://sensara.co/api/v4/subscriber/erpnext_subscription'
     try:
         response = requests.post('https://sensara.co/api/v4/subscriber/erpnext_subscription',headers=headers,data=json.dumps(body))
+        webhook_log.response = response
     except HTTPError as http_err:
+        webhook_log.error = http_err
         frappe.throw(_("HTTP Error {0}".format(http_err)))
-    print("\n\n\nResponse >>> ",response)
+    print("\n\n\nResponse >>> ",type(response ))
+
+    # create a webhook log
+    # webhook_log = frappe.new_doc("Webhook Request Log")
+    # webhook_log.webhook = "Subscription Activation"
+    # webhook_log.reference_document = doc.name
+    # webhook_log.headers = headers
+    # webhook_log.data = json.dumps(body)
+    # webhook_log.user = doc.modified_by
+    # webhook_log.url = 'https://sensara.co/api/v4/subscriber/erpnext_subscription'
+    # webhook_log.response = response
+    webhook_log.insert()
