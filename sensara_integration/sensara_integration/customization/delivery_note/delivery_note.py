@@ -5,6 +5,7 @@ import re
 import requests, json
 from requests.exceptions import HTTPError 
 import frappe
+import datetime
 
 def on_sumbit(doc,method=None):
     headers = {
@@ -33,14 +34,17 @@ def on_sumbit(doc,method=None):
             serial_batch_bundle = frappe.get_doc("Serial and Batch Bundle",item.serial_and_batch_bundle)
 
             tv_device_serial_number = serial_batch_bundle.entries[0].serial_no #item.tv_device_serial_number 
+    print("\n\n\n>>>>>>>>",type(doc.custom_start_timestamp_for_the_plan.isoformat()))
+    # start_timestamp_for_the_plan = doc.custom_start_timestamp_for_the_plan.strftime("%Y-%m-%d %H:%M:%S") 
+    # end_timestamp_for_the_plan = doc.custom_end_timestamp_for_the_plan.strftime("%Y-%m-%d %H:%M:%S") 
 
     plan.update({"entitlements":entitlements})
     body = {
             "action": "SUBSCRIPTION_ACTIVATION",
             "phone_number": doc.contact_phone,
             "country_code": doc.custom_country_code,
-            "start_timestamp": doc.custom_start_timestamp_for_the_plan,
-            "end_timestamp": doc.custom_start_timestamp_for_the_plan,
+            "start_timestamp": doc.custom_start_timestamp_for_the_plan.isoformat(), 
+            "end_timestamp": doc.custom_end_timestamp_for_the_plan.isoformat(),
             "subscription_id": doc.name,
             "subscription_type": doc.custom_subscription_type,
             "tv_device_serial_number": tv_device_serial_number,
