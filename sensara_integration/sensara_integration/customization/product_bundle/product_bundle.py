@@ -13,7 +13,7 @@ def validate(doc,method=None):
 			'content-type':'application/json',
             'x-sms-key': 'caf917de-21f2-4b41-7aa0-c9d5b0ec7095'
 		}
-
+    base_url = frappe.utils.get_url()
     entitlements = []
     body = {
         "action": "PRODUCT_CATALOG_UPDATE",
@@ -56,10 +56,19 @@ def validate(doc,method=None):
             "attached_to_name": item.item_code,
             "attached_to_field": "image"
         },['file_url'])
+        entitlement_title = ""
+        if item_image_url:
+            item_image_url = base_url+item_image_url       
+        try:
+            soup = bs(item.description)
+            p_tag = soup.find('p')
+            entitlement_title = p_tag.text
+        except:
+            entitlement_title = ""
         entitlements.append(
             {
                 "entitlement_id": item.item_code,
-                "entitlement_title": item.description,
+                "entitlement_title": entitlement_title,
                 "entitlement_type": "app",
                 "entitlement_image": item_image_url
             }
@@ -70,7 +79,7 @@ def validate(doc,method=None):
 
 
     body.update({"plans":plans_list})
-    print("body json= ",json.dumps(body))
+    # print("body json= ",json.dumps(body))
 
     # Make the POST request
     webhook_log = frappe.new_doc("Sensara Integration Request Log")
@@ -86,6 +95,6 @@ def validate(doc,method=None):
     except HTTPError as http_err:
         webhook_log.error = http_err
         frappe.throw(_("HTTP Error {0}".format(http_err)))
-    print("\n\n\nResponse >>> ",response)
+    # print("\n\n\nResponse >>> ",response)
 
     webhook_log.insert()
