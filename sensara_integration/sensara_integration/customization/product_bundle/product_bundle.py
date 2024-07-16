@@ -9,9 +9,10 @@ import datetime
 from datetime import datetime
 
 def validate(doc,method=None):
+    sensara_settings = frappe.get_doc('Sensara Integration Settings')
     headers = {
 			'content-type':'application/json',
-            'x-sms-key': 'caf917de-21f2-4b41-7aa0-c9d5b0ec7095'
+            sensara_settings.api_key: sensara_settings.api_secret
 		}
     base_url = frappe.utils.get_url()
     entitlements = []
@@ -88,9 +89,9 @@ def validate(doc,method=None):
     webhook_log.headers = str(headers)
     webhook_log.data = str(json.dumps(body))
     webhook_log.user = doc.modified_by
-    webhook_log.url = 'https://sensara.co/api/v4/subscriber/erpnext_subscription'
+    webhook_log.url = sensara_settings.base_url
     try:
-        response = requests.post('https://sensara.co/api/v4/subscriber/erpnext_subscription',headers=headers,data=json.dumps(body))
+        response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
     except HTTPError as http_err:
         webhook_log.error = http_err
