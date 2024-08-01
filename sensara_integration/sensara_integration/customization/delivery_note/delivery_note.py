@@ -41,6 +41,7 @@ def on_sumbit(doc,method=None):
             "action": "SUBSCRIPTION_ACTIVATION",
             "phone_number": doc.contact_phone,
             "country_code": doc.custom_country_code,
+            "customer_id": doc.customer,
             "start_timestamp": doc.custom_start_timestamp_for_the_plan.isoformat(), 
             "end_timestamp": doc.custom_end_timestamp_for_the_plan.isoformat(),
             "subscription_id": doc.name,
