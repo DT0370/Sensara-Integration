@@ -14,7 +14,8 @@
   "user",
   "url",
   "response",
-  "error"
+  "error",
+  "message"
  ],
  "fields": [
   {
@@ -73,12 +74,18 @@
    "fieldtype": "Text",
    "label": "Error",
    "read_only": 1
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Text",
+   "label": "Message",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 22:08:18.109424",
+ "modified": "2024-08-29 21:47:59.311656",
  "modified_by": "Administrator",
  "module": "Sensara Integration",
  "name": "Sensara Integration Request Log",

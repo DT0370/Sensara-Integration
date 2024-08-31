@@ -30,7 +30,7 @@ def on_sumbit(doc,method=None):
     
     for item in doc.items:
         if item.item_code in product_bundle_list:
-            plan.update({"plan_id":item.item_code   , "id":item.item_name})
+            plan.update({"plan_id":item.item_code, "id":item.item_name})
         else:
             serial_batch_bundle = frappe.get_doc("Serial and Batch Bundle",item.serial_and_batch_bundle)
 
@@ -50,8 +50,6 @@ def on_sumbit(doc,method=None):
         } 
     body.update({"plan": plan})
 
-    print("body json= ",json.dumps(body))
-
     # Make the POST request
     webhook_log = frappe.new_doc("Sensara Integration Request Log")
     webhook_log.request_for = "Subscription Activation"
@@ -63,9 +61,10 @@ def on_sumbit(doc,method=None):
     try:
         response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
+        webhook_log.message = str(response.json())
+
     except HTTPError as http_err:
         webhook_log.error = http_err
         frappe.throw(_("HTTP Error {0}".format(http_err)))
-    print("\n\n\nResponse >>> ",type(response ))
 
     webhook_log.insert()

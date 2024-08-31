@@ -16,10 +16,12 @@ import datetime
 class SubscriptionDeactivation(Document):
 	
 	def on_submit(self):
-		# print(">>>>>",self)
+    	sensara_settings = frappe.get_doc('Sensara Integration Settings')
+
 		headers = {
 				'content-type':'application/json',
-				'x-sms-key': 'caf917de-21f2-4b41-7aa0-c9d5b0ec7095'
+            	sensara_settings.api_key: sensara_settings.api_secret
+				
 			}
 		body = {
 			"action": self.action,
@@ -34,13 +36,14 @@ class SubscriptionDeactivation(Document):
 		webhook_log.headers = str(headers)
 		webhook_log.data = str(json.dumps(body))
 		webhook_log.user = self.modified_by
-		webhook_log.url = 'https://sensara.co/api/v4/subscriber/erpnext_subscription'
+		webhook_log.url = sensara_settings.base_url
 
 		try:
-			response = requests.post('https://sensara.co/api/v4/subscriber/erpnext_subscription',headers=headers,data=json.dumps(body))
+			response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
 			webhook_log.response = response
+			webhook_log.message = str(response.json())
+
 		except HTTPError as http_err:
 			webhook_log.error = http_err
 			# frappe.throw(_("HTTP Error {0}".format(http_err)))
-			# print(">>>>>>>>>",http_err)
 		webhook_log.insert()
