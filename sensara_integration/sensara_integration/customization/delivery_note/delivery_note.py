@@ -7,7 +7,15 @@ from requests.exceptions import HTTPError
 import frappe
 import datetime
 
-def on_sumbit(doc,method=None):
+def after_insert(doc,method=None):
+    body, webhook_log = create_subscription_payload(doc)
+    post_subscription_payload(body, webhook_log)
+
+def on_submit(doc,method=None):
+    body, webhook_log = create_subscription_payload(doc)
+    put_subscription_payload(body, webhook_log)
+
+def create_subscription_payload(doc):
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
     headers = {
 			'content-type':'application/json',
@@ -17,6 +25,7 @@ def on_sumbit(doc,method=None):
     plan = {}
     entitlements = []
     tv_device_serial_number = ""
+
     for packed_item in doc.packed_items:
         entitlements.append({
             "id": packed_item.parent_item,
@@ -32,18 +41,27 @@ def on_sumbit(doc,method=None):
         if item.item_code in product_bundle_list:
             plan.update({"plan_id":item.item_code, "id":item.item_name})
         else:
-            serial_batch_bundle = frappe.get_doc("Serial and Batch Bundle",item.serial_and_batch_bundle)
+            if doc.docstatus == 1:
+                serial_batch_bundle = frappe.get_doc("Serial and Batch Bundle",item.serial_and_batch_bundle)
 
-            tv_device_serial_number = serial_batch_bundle.entries[0].serial_no #item.tv_device_serial_number 
+                tv_device_serial_number = serial_batch_bundle.entries[0].serial_no #item.tv_device_serial_number 
 
     plan.update({"entitlements":entitlements})
+
+    if isinstance(doc.custom_start_timestamp_for_the_plan, datetime.datetime):
+        start_timestamp = doc.custom_start_timestamp_for_the_plan.isoformat()
+        end_timestamp = doc.custom_start_timestamp_for_the_plan.isoformat()
+    if isinstance(doc.custom_start_timestamp_for_the_plan, str):
+        start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+        end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+    
     body = {
             "action": "SUBSCRIPTION_ACTIVATION",
             "phone_number": doc.contact_phone,
             "country_code": doc.custom_country_code,
             "customer_id": doc.customer,
-            "start_timestamp": doc.custom_start_timestamp_for_the_plan.isoformat(), 
-            "end_timestamp": doc.custom_end_timestamp_for_the_plan.isoformat(),
+            "start_timestamp": start_timestamp, 
+            "end_timestamp": end_timestamp,
             "subscription_id": doc.name,
             "subscription_type": doc.custom_subscription_type,
             "tv_device_serial_number": tv_device_serial_number,
@@ -58,11 +76,40 @@ def on_sumbit(doc,method=None):
     webhook_log.data = str(json.dumps(body))
     webhook_log.user = doc.modified_by
     webhook_log.url = sensara_settings.base_url
+
+    return body,webhook_log
+
+def post_subscription_payload(body, webhook_log):
+    sensara_settings = frappe.get_doc('Sensara Integration Settings')
+    headers = {
+            'content-type':'application/json',
+            sensara_settings.api_key: sensara_settings.api_secret
+        }
     try:
         response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
         webhook_log.message = str(response.json())
 
+    except HTTPError as http_err:
+        webhook_log.error = http_err
+        frappe.throw(_("HTTP Error {0}".format(http_err)))
+
+    webhook_log.insert()
+
+def put_subscription_payload(body, webhook_log):
+    webhook_log.request_for = "Subscription Update"
+    body["action"] = "SUBSCRIPTION_UPDATE"
+
+    sensara_settings = frappe.get_doc('Sensara Integration Settings')
+    headers = {
+            'content-type':'application/json',
+            sensara_settings.api_key: sensara_settings.api_secret
+        }
+
+    try:
+        response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
+        webhook_log.response = response
+        webhook_log.message = str(response.json())
     except HTTPError as http_err:
         webhook_log.error = http_err
         frappe.throw(_("HTTP Error {0}".format(http_err)))
