@@ -13,7 +13,9 @@ def after_insert(doc,method=None):
 
 def on_submit(doc,method=None):
     body, webhook_log = create_subscription_payload(doc)
-    put_subscription_payload(body, webhook_log)
+    body.update({"action": "SUBSCRIPTION_UPDATE"})
+    if body["action"] == "SUBSCRIPTION_UPDATE":
+        put_subscription_payload(body, webhook_log)
 
 def create_subscription_payload(doc):
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
@@ -50,13 +52,13 @@ def create_subscription_payload(doc):
 
     if isinstance(doc.custom_start_timestamp_for_the_plan, datetime.datetime):
         start_timestamp = doc.custom_start_timestamp_for_the_plan.isoformat()
-        end_timestamp = doc.custom_start_timestamp_for_the_plan.isoformat()
+        end_timestamp = doc.custom_end_timestamp_for_the_plan.isoformat()
     if isinstance(doc.custom_start_timestamp_for_the_plan, str):
         start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
         end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
     
     body = {
-            "action": "SUBSCRIPTION_ACTIVATION",
+            "action": "SUBSCRIPTION_ACTIVATION" if doc.is_new() else "SUBSCRIPTION_UPDATE",
             "phone_number": doc.contact_phone,
             "country_code": doc.custom_country_code,
             "customer_id": doc.customer,
@@ -97,9 +99,7 @@ def post_subscription_payload(body, webhook_log):
     webhook_log.insert()
 
 def put_subscription_payload(body, webhook_log):
-    webhook_log.request_for = "Subscription Update"
-    body["action"] = "SUBSCRIPTION_UPDATE"
-
+    webhook_log.request_for = "Subscription Update"    
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
     headers = {
             'content-type':'application/json',
