@@ -8,16 +8,16 @@ import frappe
 import datetime
 
 def after_insert(doc,method=None):
-    body, webhook_log = create_subscription_payload(doc)
+    action = "SUBSCRIPTION_ACTIVATION"
+    body, webhook_log = create_subscription_payload(doc,action)
     post_subscription_payload(body, webhook_log)
 
 def on_submit(doc,method=None):
-    body, webhook_log = create_subscription_payload(doc)
-    body.update({"action": "SUBSCRIPTION_UPDATE"})
-    if body["action"] == "SUBSCRIPTION_UPDATE":
-        put_subscription_payload(body, webhook_log)
+    action = "SUBSCRIPTION_UPDATE"
+    body, webhook_log = create_subscription_payload(doc,action)
+    put_subscription_payload(body, webhook_log)
 
-def create_subscription_payload(doc):
+def create_subscription_payload(doc,action):
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
     headers = {
 			'content-type':'application/json',
@@ -58,7 +58,7 @@ def create_subscription_payload(doc):
         end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
     
     body = {
-            "action": "SUBSCRIPTION_ACTIVATION" if doc.is_new() else "SUBSCRIPTION_UPDATE",
+            "action": action,
             "phone_number": doc.contact_phone,
             "country_code": doc.custom_country_code,
             "customer_id": doc.customer,
@@ -99,6 +99,7 @@ def post_subscription_payload(body, webhook_log):
     webhook_log.insert()
 
 def put_subscription_payload(body, webhook_log):
+
     webhook_log.request_for = "Subscription Update"    
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
     headers = {
