@@ -54,9 +54,13 @@ def create_subscription_payload(doc,action):
         start_timestamp = doc.custom_start_timestamp_for_the_plan.isoformat()
         end_timestamp = doc.custom_end_timestamp_for_the_plan.isoformat()
     if isinstance(doc.custom_start_timestamp_for_the_plan, str):
-        start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
-        end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
-    
+        try:
+            start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+            end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+        except Exception as e:
+            start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
+            end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
+
     body = {
             "action": action,
             "phone_number": doc.contact_phone,
