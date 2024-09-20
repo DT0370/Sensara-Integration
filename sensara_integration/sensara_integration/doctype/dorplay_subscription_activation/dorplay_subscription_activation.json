@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-20 18:59:51.350608",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "subscription_id",
+  "action",
+  "country_code",
+  "phone_number",
+  "start_timestamp_for_the_plan",
+  "column_break_taph",
+  "customer",
+  "subscription_type",
+  "plan",
+  "plan_name",
+  "end_timestamp_for_the_plan",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "subscription_id",
+   "fieldtype": "Link",
+   "label": "Subscription ID",
+   "options": "Activation Code"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Data",
+   "label": "Action"
+  },
+  {
+   "default": "+91",
+   "fieldname": "country_code",
+   "fieldtype": "Data",
+   "label": "Country Code"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "fieldname": "start_timestamp_for_the_plan",
+   "fieldtype": "Datetime",
+   "label": "Start Timestamp for the Plan"
+  },
+  {
+   "fieldname": "column_break_taph",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "subscription_type",
+   "fieldtype": "Data",
+   "label": "Subscription Type"
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "label": "Plan",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "plan.item_name",
+   "fieldname": "plan_name",
+   "fieldtype": "Data",
+   "label": "Plan Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "end_timestamp_for_the_plan",
+   "fieldtype": "Datetime",
+   "label": "End Timestamp for the Plan"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Dorplay Subscription",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-20 18:59:51.350608",
+ "modified_by": "Administrator",
+ "module": "Sensara Integration",
+ "name": "Dorplay Subscription Activation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
