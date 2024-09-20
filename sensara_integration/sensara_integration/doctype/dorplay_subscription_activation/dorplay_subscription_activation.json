@@ -15,8 +15,7 @@
   "subscription_type",
   "plan",
   "plan_name",
-  "end_timestamp_for_the_plan",
-  "amended_from"
+  "end_timestamp_for_the_plan"
  ],
  "fields": [
   {
@@ -78,21 +77,11 @@
    "fieldname": "end_timestamp_for_the_plan",
    "fieldtype": "Datetime",
    "label": "End Timestamp for the Plan"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Dorplay Subscription",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-20 18:59:51.350608",
+ "modified": "2024-09-20 19:53:23.868013",
  "modified_by": "Administrator",
  "module": "Sensara Integration",
  "name": "Dorplay Subscription Activation",
