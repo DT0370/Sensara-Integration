@@ -44,8 +44,12 @@ class DorplaySubscriptionActivation(Document):
 			start_timestamp = self.start_timestamp_for_the_plan.isoformat()
 			end_timestamp = self.start_timestamp_for_the_plan.isoformat()
 		if isinstance(self.start_timestamp_for_the_plan, str):
-			start_timestamp = datetime.datetime.strptime(self.start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
-			end_timestamp = datetime.datetime.strptime(self.end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+			try:
+				start_timestamp = datetime.datetime.strptime(self.custom_start_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+				end_timestamp = datetime.datetime.strptime(self.custom_end_timestamp_for_the_plan, "%Y-%m-%d %H:%M:%S").isoformat()
+			except Exception as e:
+				start_timestamp = datetime.datetime.strptime(self.custom_start_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
+				end_timestamp = datetime.datetime.strptime(self.custom_end_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
 
 		body = {
 			"action": "SUBSCRIPTION_ACTIVATION",
