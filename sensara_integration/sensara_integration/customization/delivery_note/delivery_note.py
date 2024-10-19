@@ -8,14 +8,16 @@ import frappe
 import datetime
 
 def after_insert(doc,method=None):
-    action = "SUBSCRIPTION_ACTIVATION"
-    body, webhook_log = create_subscription_payload(doc,action)
-    post_subscription_payload(body, webhook_log)
+    if is_return == 0:
+        action = "SUBSCRIPTION_ACTIVATION"
+        body, webhook_log = create_subscription_payload(doc,action)
+        post_subscription_payload(body, webhook_log)
 
 def on_submit(doc,method=None):
-    action = "SUBSCRIPTION_UPDATE"
-    body, webhook_log = create_subscription_payload(doc,action)
-    put_subscription_payload(body, webhook_log)
+    if is_return == 0:
+        action = "SUBSCRIPTION_UPDATE"
+        body, webhook_log = create_subscription_payload(doc,action)
+        put_subscription_payload(body, webhook_log)
 
 def create_subscription_payload(doc,action):
     sensara_settings = frappe.get_doc('Sensara Integration Settings')

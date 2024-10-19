@@ -18,7 +18,7 @@ class DorplaySubscriptionActivation(Document):
 		sensara_settings = frappe.get_doc('Sensara Integration Settings')
 		headers = {
 			'content-type':'application/json',
-			sensara_settings.api_key: sensara_settings.api_secret
+			sensara_settings.dorplay_api_key: sensara_settings.dorplay_api_secret
 		}
 
 		plan = {}
@@ -73,7 +73,7 @@ class DorplaySubscriptionActivation(Document):
 		webhook_log.headers = str(headers)
 		webhook_log.data = str(json.dumps(body))
 		webhook_log.user = self.modified_by
-		webhook_log.url = sensara_settings.base_url
+		webhook_log.url = sensara_settings.dorplay_base_url
 
 		return body,webhook_log
 
@@ -81,10 +81,10 @@ def post_subscription_payload(body, webhook_log):
 	sensara_settings = frappe.get_doc('Sensara Integration Settings')
 	headers = {
 		'content-type':'application/json',
-		sensara_settings.api_key: sensara_settings.api_secret
+		sensara_settings.dorplay_api_key: sensara_settings.dorplay_api_secret
 	}
 	try:
-		response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
+		response = requests.post(sensara_settings.dorplay_base_url,headers=headers,data=json.dumps(body))
 		webhook_log.response = response
 		webhook_log.message = str(response.json())
 

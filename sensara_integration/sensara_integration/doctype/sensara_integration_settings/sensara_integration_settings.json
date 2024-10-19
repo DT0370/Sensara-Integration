@@ -5,9 +5,14 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "sensara_details_section",
   "base_url",
   "api_key",
-  "api_secret"
+  "api_secret",
+  "dorplay_details_section",
+  "dorplay_base_url",
+  "dorplay_api_key",
+  "dorplay_api_secret"
  ],
  "fields": [
   {
@@ -24,12 +29,37 @@
    "fieldname": "api_secret",
    "fieldtype": "Data",
    "label": "API Secret"
+  },
+  {
+   "fieldname": "sensara_details_section",
+   "fieldtype": "Section Break",
+   "label": "Sensara Details"
+  },
+  {
+   "fieldname": "dorplay_details_section",
+   "fieldtype": "Section Break",
+   "label": "Dorplay Details"
+  },
+  {
+   "fieldname": "dorplay_base_url",
+   "fieldtype": "Data",
+   "label": "Dorplay Base URL"
+  },
+  {
+   "fieldname": "dorplay_api_key",
+   "fieldtype": "Data",
+   "label": "Dorplay API Key"
+  },
+  {
+   "fieldname": "dorplay_api_secret",
+   "fieldtype": "Data",
+   "label": "Dorplay API Secret"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-07-16 17:55:40.031195",
+ "modified": "2024-10-18 22:32:05.879630",
  "modified_by": "Administrator",
  "module": "Sensara Integration",
  "name": "Sensara Integration Settings",

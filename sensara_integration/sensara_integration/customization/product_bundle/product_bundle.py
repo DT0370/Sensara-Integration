@@ -10,10 +10,18 @@ from datetime import datetime
 
 def validate(doc,method=None):
     sensara_settings = frappe.get_doc('Sensara Integration Settings')
-    headers = {
-			'content-type':'application/json',
+    if doc.custom_is_dorplay_product_bundle == 1:
+
+        headers = {
+            'content-type':'application/json',
             sensara_settings.api_key: sensara_settings.api_secret
-		}
+            }
+    elif doc.custom_is_dorplay_product_bundle == 0:
+        headers = {
+                'content-type':'application/json',
+                sensara_settings.dorplay_api_key: sensara_settings.dorplay_api_secret
+            }
+
     base_url = frappe.utils.get_url()
     entitlements = []
     body = {
@@ -81,6 +89,10 @@ def validate(doc,method=None):
 
     body.update({"plans":plans_list})
     # print("body json= ",json.dumps(body))
+    if doc.custom_is_dorplay_product_bundle ==1 :
+        post_base_url = sensara_settings.dorplay_base_url
+    elif doc.custom_is_dorplay_product_bundle ==0 :
+        post_base_url = sensara_settings.base_url
 
     # Make the POST request
     webhook_log = frappe.new_doc("Sensara Integration Request Log")
@@ -89,9 +101,9 @@ def validate(doc,method=None):
     webhook_log.headers = str(headers)
     webhook_log.data = str(json.dumps(body))
     webhook_log.user = doc.modified_by
-    webhook_log.url = sensara_settings.base_url
+    webhook_log.url = post_base_url
     try:
-        response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
+        response = requests.post(post_base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
         webhook_log.message = str(response.json())
 
