@@ -14,12 +14,12 @@ def validate(doc,method=None):
 
         headers = {
             'content-type':'application/json',
-            sensara_settings.api_key: sensara_settings.api_secret
+            sensara_settings.api_key: sensara_settings.dorplay_api_secret
             }
     elif doc.custom_is_dorplay_product_bundle == 0:
         headers = {
                 'content-type':'application/json',
-                sensara_settings.dorplay_api_key: sensara_settings.dorplay_api_secret
+                sensara_settings.dorplay_api_key: sensara_settings.api_secret
             }
 
     base_url = frappe.utils.get_url()
