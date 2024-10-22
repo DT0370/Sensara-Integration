@@ -86,7 +86,10 @@ def post_subscription_payload(body, webhook_log):
 	try:
 		response = requests.post(sensara_settings.dorplay_base_url,headers=headers,data=json.dumps(body))
 		webhook_log.response = response
-		webhook_log.message = str(response.json())
+		try:
+			webhook_log.message = str(response.json())
+		except Exception as e:
+			print(e)
 
 	except HTTPError as http_err:
 		webhook_log.error = http_err
