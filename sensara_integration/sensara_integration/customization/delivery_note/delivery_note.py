@@ -8,13 +8,13 @@ import frappe
 import datetime
 
 def after_insert(doc,method=None):
-    if is_return == 0:
+    if doc.is_return == 0:
         action = "SUBSCRIPTION_ACTIVATION"
         body, webhook_log = create_subscription_payload(doc,action)
         post_subscription_payload(body, webhook_log)
 
 def on_submit(doc,method=None):
-    if is_return == 0:
+    if doc.is_return == 0:
         action = "SUBSCRIPTION_UPDATE"
         body, webhook_log = create_subscription_payload(doc,action)
         put_subscription_payload(body, webhook_log)
@@ -96,7 +96,10 @@ def post_subscription_payload(body, webhook_log):
     try:
         response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
-        webhook_log.message = str(response.json())
+        try:
+            webhook_log.message = str(response.json())
+        except Exception as e:
+            print(e)
 
     except HTTPError as http_err:
         webhook_log.error = http_err
@@ -116,7 +119,11 @@ def put_subscription_payload(body, webhook_log):
     try:
         response = requests.post(sensara_settings.base_url,headers=headers,data=json.dumps(body))
         webhook_log.response = response
-        webhook_log.message = str(response.json())
+        try:
+            webhook_log.message = str(response.json())
+        except Exception as e:
+            print(e)
+
     except HTTPError as http_err:
         webhook_log.error = http_err
         frappe.throw(_("HTTP Error {0}".format(http_err)))
