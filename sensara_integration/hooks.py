@@ -136,6 +136,9 @@ doc_events = {
     },
     "Product Bundle": {
         "validate": "sensara_integration.sensara_integration.customization.product_bundle.product_bundle.validate"
+    },
+    "Sales Invoice": {
+        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.sales_invoice.on_submit"
     }
  }
 # Scheduled Tasks
