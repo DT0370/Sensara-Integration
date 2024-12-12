@@ -7,6 +7,7 @@ from requests.exceptions import HTTPError
 import frappe
 import datetime
 
+
 def on_submit(doc,method=None):
     if doc.is_return == 0 and doc.is_renewal == 1:
         action = "SUBSCRIPTION_UPDATE"
@@ -68,10 +69,12 @@ def create_subscription_payload(doc,action):
         except Exception as e:
             start_timestamp = datetime.datetime.strptime(doc.custom_start_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
             end_timestamp = datetime.datetime.strptime(doc.custom_end_timestamp_for_the_plan, "%Y-%m-%d").isoformat()
+	
+	delivery_note_number = frappe.get_doc("Delivery Note", doc.custom_parent_delivery_note)
 
     body = {
             "action": action,
-            "phone_number": doc.contact_mobile,
+            "phone_number": delivery_note_number.contact_mobile,
             "country_code": doc.custom_country_code,
             "customer_id": doc.customer,
             "start_timestamp": str(start_timestamp) + "Z", 
