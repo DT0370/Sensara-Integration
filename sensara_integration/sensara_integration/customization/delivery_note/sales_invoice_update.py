@@ -33,7 +33,7 @@ def create_subscription_payload(doc,action):
 
     # Loop through the items in the Sales Invoice
     for item in doc.items:
-        plan.update({"plan_id": item.item_code, "id": item.item_code})
+        plan.update({"plan_id": item.item_code})
         if item.item_code in product_bundle_list:
             product_details = frappe.get_doc("Product Bundle", item.item_code)
             for i in product_details.items:
