@@ -102,6 +102,7 @@ def get_serial_number(delivery_note_name):
     return serial_number
 
 # Main Event Function
+@frappe.whitelist(allow_guest=True)
 def radix_tv_locking(doc, method):
     if doc.is_renewal:
         # Get the parent delivery note
