@@ -145,7 +145,8 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {"cron": {"16 15 * * *":["sensara_integration.sensara_integration.customization.delivery_note.radix_lock.radix_tv_locking"]}}
+
 # 	"all": [
 # 		"sensara_integration.tasks.all"
 # 	],
