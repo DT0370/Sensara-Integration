@@ -70,7 +70,9 @@ def is_within_seven_days(subscription_end_date):
         return False
 
 # Main Event Function
+@frappe.whitelist()
 def radix_tv_locking(doc, method):
+    print("*******************radix_tv_locking*************************")
     try:
         # Fetch entries with relevant filters
         website_entries = frappe.get_all(
