@@ -142,6 +142,13 @@ doc_events = {
         # "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.radix.radix_tv_locking"
     }
  }
+
+
+scheduler_events = {
+    "daily": [
+        "sensara_integration.coupons_tasks.scheduled_update_dates"
+    ]
+}
 # Scheduled Tasks
 # ---------------
 
