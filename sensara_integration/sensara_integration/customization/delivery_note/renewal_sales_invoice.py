@@ -38,7 +38,7 @@ def create_subscription_payload(doc,action):
     #     if item.item_code in product_bundle_list:
     #         product_details = frappe.get_doc("Product Bundle", item.item_code)
     if product_details:
-        for i in product_details:
+        for i in product_details.items:
             entitlements.append({
                 "id": doc.item_code,  # ID from the Sales Invoice item
                 "entitlement_id": i.item_code,  # Assuming a field like 'product_code' exists in Product
