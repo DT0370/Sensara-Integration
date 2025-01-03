@@ -58,7 +58,7 @@ class DorplaySubscriptionActivation(Document):
 			"customer_id": self.customer,
 			"start_timestamp": str(start_timestamp) + "Z", 
 			"end_timestamp": str(end_timestamp) + "Z",
-			"subscription_id": self.subscription_id,
+			"subscription_id": self.subscription_id if self.subscription_id else preview_subscription_id,
 			"subscription_type": "Non-TV",
 			"tv_device_serial_number": None,
 			"tv_model": None,

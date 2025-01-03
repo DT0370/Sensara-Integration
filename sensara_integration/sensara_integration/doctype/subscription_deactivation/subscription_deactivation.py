@@ -27,7 +27,7 @@ class SubscriptionDeactivation(Document):
 			"action": self.action,
 			"phone_number": self.phone_number,
 			"country_code": "+91",
-			"subscription_id": self.subscription_id
+			"subscription_id": self.subscription_id if self.subscription_id else preview_subscription_id,
 		}
 
 		webhook_log = frappe.new_doc("Sensara Integration Request Log")
