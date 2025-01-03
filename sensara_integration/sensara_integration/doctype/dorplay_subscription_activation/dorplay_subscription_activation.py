@@ -58,13 +58,14 @@ class DorplaySubscriptionActivation(Document):
 
         # Extract preview_subscription_id
         preview_subscription_id = getattr(self, "preview_subscription_id", None)
+        preview_customer = getattr(self, "preview_customer", None)
 
         # Construct request body
         body = {
             "action": "SUBSCRIPTION_ACTIVATION",
             "phone_number": self.phone_number,
             "country_code": self.country_code,
-            "customer_id": self.customer,
+            "customer_id": self.customer if self.customer else preview_customer,
             "start_timestamp": str(start_timestamp) + "Z",
             "end_timestamp": str(end_timestamp) + "Z",
             "subscription_id": self.subscription_id if self.subscription_id else preview_subscription_id,
