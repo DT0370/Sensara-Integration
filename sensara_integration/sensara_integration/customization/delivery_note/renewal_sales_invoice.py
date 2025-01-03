@@ -48,7 +48,7 @@ def create_subscription_payload(doc,action):
         
     if doc.parent_delivery_note:
         delivery_note = frappe.get_doc("Delivery Note", doc.parent_delivery_note)
-        for dn_item in delivery_note:
+        for dn_item in delivery_note.items:
             item_doc = frappe.get_doc("Item", dn_item.item_code)
             if item_doc.is_stock_item:
                 serial_number = dn_item.serial_no  # Assuming 'serial_no' is the correct field in Delivery Note items
