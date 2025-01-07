@@ -8,7 +8,7 @@ def get_jwt_token():
         payload = {
             # "username": "admin@dorplay-dev", --dev
             # "password": "Pass1234!" --dev
-			"username": "admin@dorplay",
+            "username": "admin@dorplay",
             "password": "We1c0me@"
         }
         headers = {
@@ -38,7 +38,7 @@ def lock_device(device_id):
                 "@class": "com.viso.entities.commands.CommandRemoteExec",
                 "remoteExecItem": {
                     # "repositoryItemId": "6759841f40d51015bb163fef",  # Replace with your dev lock ID
-					"repositoryItemId": "66cb4b265fd42015c0cb255e",  # Replace with your dev lock ID
+                    "repositoryItemId": "66cb4b265fd42015c0cb255e",  # Replace with your dev lock ID
                     "@class": "com.viso.entities.RemoteExecItem"
                 }
             },
