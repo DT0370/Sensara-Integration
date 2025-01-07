@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2024-09-26 09:08:58.377680",
  "doctype": "DocType",
@@ -11,7 +12,9 @@
   "amended_from",
   "column_break_ohga",
   "serial_number",
-  "actual_installation_date"
+  "actual_installation_date",
+  "subscription_type",
+  "subscription_status"
  ],
  "fields": [
   {
@@ -62,12 +65,22 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "subscription_type",
+   "fieldtype": "Data",
+   "label": "Subscription Type"
+  },
+  {
+   "fieldname": "subscription_status",
+   "fieldtype": "Data",
+   "label": "Subscription Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-26 09:09:12.220186",
+ "modified": "2024-12-12 19:41:03.856794",
  "modified_by": "Administrator",
  "module": "Sensara Integration",
  "name": "TV Launcher Activation",

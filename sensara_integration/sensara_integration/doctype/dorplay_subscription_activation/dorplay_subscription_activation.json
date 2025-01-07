@@ -6,23 +6,29 @@
  "engine": "InnoDB",
  "field_order": [
   "subscription_id",
+  "coupon_code",
+  "preview_subscription_id",
   "action",
   "country_code",
   "phone_number",
   "start_timestamp_for_the_plan",
   "column_break_taph",
   "customer",
+  "preview_customer",
   "subscription_type",
   "plan",
   "plan_name",
-  "end_timestamp_for_the_plan"
+  "end_timestamp_for_the_plan",
+  "section_break_yjcx",
+  "message",
+  "response"
  ],
  "fields": [
   {
    "fieldname": "subscription_id",
    "fieldtype": "Link",
    "label": "Subscription ID",
-   "options": "Activation Code"
+   "options": "Dorplay Activation Codes"
   },
   {
    "fieldname": "action",
@@ -77,11 +83,45 @@
    "fieldname": "end_timestamp_for_the_plan",
    "fieldtype": "Datetime",
    "label": "End Timestamp for the Plan"
+  },
+  {
+   "fieldname": "preview_subscription_id",
+   "fieldtype": "Link",
+   "label": "Preview Subscription ID ",
+   "options": "Dorplay Preview Activation Code"
+  },
+  {
+   "fieldname": "preview_customer",
+   "fieldtype": "Link",
+   "label": "Preview Customer",
+   "options": "Preview Customer"
+  },
+  {
+   "fieldname": "section_break_yjcx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Long Text",
+   "label": "Message",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "subscription_id.naming_series",
+   "fieldname": "coupon_code",
+   "fieldtype": "Data",
+   "label": "Coupon Code"
+  },
+  {
+   "fieldname": "response",
+   "fieldtype": "Long Text",
+   "label": "Response",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-20 19:53:23.868013",
+ "modified": "2025-01-06 19:55:25.445873",
  "modified_by": "Administrator",
  "module": "Sensara Integration",
  "name": "Dorplay Subscription Activation",
