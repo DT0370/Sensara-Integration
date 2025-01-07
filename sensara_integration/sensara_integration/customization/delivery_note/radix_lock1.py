@@ -29,6 +29,7 @@ def lock_device(doc, method):
     try:
         lock_url = "https://visomdm.com/rest/command/send/sendcommanddatatomany"
         token = get_jwt_token()
+        serial_number = doc.serial_number.lower()
 
         payload = {
             "commandData": {
@@ -39,7 +40,7 @@ def lock_device(doc, method):
                     "@class": "com.viso.entities.RemoteExecItem"
                 }
             },
-            "deviceIds": [doc.serial_number]
+            "deviceIds": [serial_number]
         }
 
         headers = {
