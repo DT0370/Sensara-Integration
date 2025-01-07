@@ -8,7 +8,7 @@ def get_jwt_token():
         payload = {
             # "username": "admin@dorplay-dev", --dev
             # "password": "Pass1234!" --dev
-			"username": "admin@dorplay",
+            "username": "admin@dorplay",
             "password": "We1c0me@"
         }
         headers = {
