@@ -7,8 +7,10 @@ def get_jwt_token():
     try:
         jwt_url = "https://visomdm.com/rest/login/getjwttoken"
         payload = {
-            "username": "admin@dorplay-dev",
-            "password": "Pass1234!"
+            # "username": "admin@dorplay-dev",
+            # "password": "Pass1234!"
+            "username": "admin@dorplay",
+            "password": "We1c0me@"
         }
         headers = {"Content-Type": "application/json"}
 
@@ -32,7 +34,8 @@ def lock_device(doc, method):
             "commandData": {
                 "@class": "com.viso.entities.commands.CommandRemoteExec",
                 "remoteExecItem": {
-                    "repositoryItemId": "67598407eb6cd12afc9a63d5",  # Replace with your lock ID
+                    # "repositoryItemId": "67598407eb6cd12afc9a63d5",  # Replace with your lock ID -- dev
+                    "repositoryItemId": "66cb25f932c16218500c6655",  # Replace with your lock ID
                     "@class": "com.viso.entities.RemoteExecItem"
                 }
             },
@@ -47,17 +50,17 @@ def lock_device(doc, method):
         response = requests.post(lock_url, json=payload, headers=headers)
         response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 
-        response_data = response.json()
-        if response_data.get("result") == "SUCCESS":
+        #response_data = response.json()
+        #if response_data.get("result") == "SUCCESS":
             # Update the locked field in Website Data doctype
-            website_data = frappe.get_doc("Website Data", {"subscription_id": doc.subscription_id})
-            if website_data:
-                website_data.locked = 1
-                website_data.save(ignore_permissions=True)
-                frappe.logger().info(f"Locked field updated to 1 for subscription ID: {doc.subscription_id}")
+        #    website_data = frappe.get_doc("Website Data", {"subscription_id": doc.subscription_id})
+        #    if website_data:
+        #        website_data.locked = 1
+        #        website_data.save(ignore_permissions=True)
+        #        frappe.logger().info(f"Locked field updated to 1 for subscription ID: {doc.subscription_id}")
 
             # Submit the document after successful API call and field update
-            doc.submit()
+        #     doc.submit()
 
         frappe.logger().info(f"Lock API called successfully for Device ID: {doc.serial_number}")
         doc.save()
