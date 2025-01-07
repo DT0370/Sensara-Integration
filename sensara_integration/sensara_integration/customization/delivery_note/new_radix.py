@@ -96,7 +96,7 @@ def get_serial_number(delivery_note_name):
                     # Iterate through the entries in the bundle
                     for entry in bundle_doc.entries:
                         # Extract the serial_no field
-                        serial_number = entry.get("serial_no").lower()
+                        serial_number = entry.get("serial_no")
                         if serial_number:
                             break
             if serial_number:
@@ -112,7 +112,7 @@ def radix_tv_locking(doc, method):
         delivery_note_name = doc.get("parent_delivery_note")
         if delivery_note_name:
             # Get the serial number from the delivery note
-            device_id = get_serial_number(delivery_note_name)
+            device_id = get_serial_number(delivery_note_name).lower()
             if device_id:
                 # Call the locking API with the device ID
                 lock_device(device_id)
