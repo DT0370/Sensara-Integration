@@ -96,7 +96,7 @@ def get_serial_number(delivery_note_name):
                     # Iterate through the entries in the bundle
                     for entry in bundle_doc.entries:
                         # Extract the serial_no field
-                        serial_number = entry.get("serial_no")
+                        serial_number = entry.get("serial_no").lower()
                         if serial_number:
                             break
             if serial_number:
