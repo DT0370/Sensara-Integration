@@ -139,7 +139,7 @@ doc_events = {
     },
     "Sales Invoice": {
         #"after_insert": "sensara_integration.sensara_integration.customization.delivery_note.sales_invoice_update.on_submit"
-        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.radix.radix_tv_locking"
+        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.new_radix.radix_tv_locking"
     },
     "Renewal Sales Invoice": {
         "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.renewal_sales_invoice.on_submit",
