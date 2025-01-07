@@ -137,12 +137,13 @@ doc_events = {
     "Product Bundle": {
         "validate": "sensara_integration.sensara_integration.customization.product_bundle.product_bundle.validate"
     },
-    #"Sales Invoice": {
-    #    "after_insert": "sensara_integration.sensara_integration.customization.delivery_note.sales_invoice_update.on_submit"
-        # "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.radix.radix_tv_locking"
-    #},
+    "Sales Invoice": {
+        "after_insert": "sensara_integration.sensara_integration.customization.delivery_note.sales_invoice_update.on_submit"
+        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.radix.radix_tv_locking"
+    },
     "Renewal Sales Invoice": {
-        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.renewal_sales_invoice.on_submit"
+        "on_submit": "sensara_integration.sensara_integration.customization.delivery_note.renewal_sales_invoice.on_submit",
+		"on_submit": "sensara_integration.sensara_integration.customization.delivery_note.radix_new_renewal.radix_tv_locking"
     },
     "Radix Locking":{
 		"after_insert": "sensara_integration.sensara_integration.customization.delivery_note.radix_lock1.lock_device"
