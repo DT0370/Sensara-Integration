@@ -38,7 +38,7 @@ def lock_device(device_id):
                 "@class": "com.viso.entities.commands.CommandRemoteExec",
                 "remoteExecItem": {
                     # "repositoryItemId": "6759841f40d51015bb163fef",  # Replace with your dev lock ID
-					"repositoryItemId": "66cb4b265fd42015c0cb255e",  # Replace with your dev lock ID
+                    "repositoryItemId": "66cb4b265fd42015c0cb255e",  # Replace with your dev lock ID
                     "@class": "com.viso.entities.RemoteExecItem"
                 }
             },
@@ -98,6 +98,7 @@ def get_serial_number(delivery_note_name):
                         # Extract the serial_no field
                         serial_number = entry.get("serial_no")
                         if serial_number:
+                            serial_number = serial_number.lower()
                             break
             if serial_number:
                 break
