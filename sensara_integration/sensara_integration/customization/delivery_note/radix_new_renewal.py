@@ -6,8 +6,8 @@ def get_jwt_token():
     try:
         jwt_url = "https://visomdm.com/rest/login/getjwttoken"
         payload = {
-            #"username": "admin@dorplay-dev",
-            #"password": "Pass1234!"
+            # "username": "admin@dorplay-dev", --dev
+            # "password": "Pass1234!" --dev
             "username": "admin@dorplay",
             "password": "We1c0me@"
         }
@@ -35,12 +35,11 @@ def lock_device(device_id):
 
         payload = {
             "commandData": {
-                # "@class": "com.viso.entities.commands.CommandRemoteExec",
-                "@class": "com.viso.entities.commands.CommandWorkflow",
-                "WorkflowItem": {
+                "@class": "com.viso.entities.commands.CommandRemoteExec",
+                "remoteExecItem": {
                     # "repositoryItemId": "6759841f40d51015bb163fef",  # Replace with your dev lock ID
-                    "repositoryItemId": "678e3ec0a8fd057d48134708",  # Replace with your dev lock ID
-                    "@class": "com.viso.entities.workflow.WorkflowItem"
+                    "repositoryItemId": "66cb4b265fd42015c0cb255e",  # Replace with your dev lock ID
+                    "@class": "com.viso.entities.RemoteExecItem"
                 }
             },
             "deviceIds": [device_id]
