@@ -6,8 +6,8 @@ def get_jwt_token():
     try:
         jwt_url = "https://visomdm.com/rest/login/getjwttoken"
         payload = {
-            "username": "admin@dorplay-dev", --dev
-            "password": "Pass1234!" --dev
+            "username": "admin@dorplay-dev",
+            "password": "Pass1234!"
             #"username": "admin@dorplay",
             #"password": "We1c0me@"
         }
