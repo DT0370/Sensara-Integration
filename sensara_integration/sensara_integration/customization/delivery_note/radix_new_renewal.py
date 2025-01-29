@@ -6,10 +6,10 @@ def get_jwt_token():
     try:
         jwt_url = "https://visomdm.com/rest/login/getjwttoken"
         payload = {
-            #"username": "admin@dorplay-dev",
-            #"password": "Pass1234!"
-            "username": "admin@dorplay",
-            "password": "We1c0me@"
+            "username": "admin@dorplay-dev",
+            "password": "Pass1234!"
+            #"username": "admin@dorplay",
+            #"password": "We1c0me@"
         }
         headers = {
             "Content-Type": "application/json"
@@ -38,8 +38,8 @@ def lock_device(device_id):
                 #"@class": "com.viso.entities.commands.CommandRemoteExec",
                 "@class": "com.viso.entities.commands.CommandWorkflow",
                 "workFlowItem": {
-                    "repositoryItemId": "6792300a6d635b03061ee55f",  # Replace with your dev lock ID
-                    #"repositoryItemId": "678e3ec0a8fd057d48134708",  # Replace with your dev lock ID
+                    # "repositoryItemId": "6792300a6d635b03061ee55f",  # Replace with your dev lock ID
+                    "repositoryItemId": "678e3ec0a8fd057d48134708",  # Replace with your dev lock ID
                     "@class": "com.viso.entities.workflow.WorkFlowItem"
                 }
             },
@@ -118,7 +118,7 @@ def radix_tv_locking(doc, method):
         if device_id:
             # Call the locking API with the device ID
             lock_device(device_id)
-            frappe.msgprint(f"Locking API called successfully for Device ID: {device_id}")
+            frappe.msgprint(f"UNLocking API called successfully for Device ID: {device_id}")
         else:
             frappe.msgprint("No Serial Number (Device ID) found for non-stock items in the Delivery Note.")
     else:
